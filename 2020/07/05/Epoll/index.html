@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Yan">
   <meta name="keywords" content="">
-  <title>进程与线程 - Likitik</title>
+  <title>Epoll - Likitik</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -152,7 +152,7 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-07-05 14:39">
+    <time datetime="2020-07-05 15:12">
       2020年7月5日 下午
     </time>
   </div>
@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1k 字
+      957 字
     </span>
   
 
@@ -204,168 +204,91 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <ul>
-<li><p>进程是操作系统分配资源的最小单位，是程序的实体，操作系统运行一个程序，那这个程序就是一个进程，每个进程有自己的pid进程号。操作系统会为进程分配一块内存。</p>
-</li>
-<li><p>而线程包含在进程之中，一个进程可以并发多个线程，但这里的并发是在cpu时间片上的串行执行，同一个进程中的线程共享进程包括内存的所有资源，而每个线程只需要分配自己的一个程序计数器，栈，寄存器这些东西。在线程上的切换是由内核根据这些完成的。</p>
-</li>
-<li><p>在进程中可以创建fork一个子进程，调用系统的clone操作，在内核中创建出一个task对象，并返回子进程号，区别在于是否拷贝内存，当然拷贝的话现在的操作系统也是拷贝索引。</p>
-</li>
-<li><p>进程控制块PCB（数据结构）</p>
-</li>
-<li><ul>
-<li><p>pid</p>
-</li>
-<li><p>user</p>
-</li>
-<li><p>ppid</p>
-</li>
-<li><p>状态保存区，栈，pc，寄存器</p>
-</li>
-<li><p>控制信息</p>
-</li>
-<li><ul>
-<li>状态</li>
-<li>通信信息</li>
-<li>所用资源</li>
-<li>进程链</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>进程 = 资源平台+执行线程</p>
-</li>
-<li><p>线程能够减少并发执行的时间和空间，比进程创建和结束的时间短，切换时间短，可直接进行不通过内核的通信</p>
-</li>
-<li><p>CPU对进程的管理</p>
-</li>
-<li><p>进程状态</p>
-</li>
-<li><ul>
-<li><p>创建</p>
-</li>
-<li><ul>
-<li><p>为子进程分配内存fork</p>
-</li>
-<li><p>复制父进程内存和cpu寄存器到子进程</p>
-</li>
-<li><p>exec加载并执行，使得上一步对父进程的复制没有作用了</p>
-</li>
-<li><ul>
-<li>可以通过vfork优化，分配内存后直接exec</li>
-<li>cow写时复制，利用虚存管理，只复制页表，共享的读，只有写时复制双份</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>就绪</p>
-</li>
-<li><ul>
-<li>阻塞态被唤醒进入就绪态</li>
-<li>运行态遇到时间片调度，进入就绪态</li>
-<li>中断产生，运行态进入就绪态</li>
-</ul>
-</li>
-<li><p>运行</p>
+              <h4 id="Select-Epoll"><a href="#Select-Epoll" class="headerlink" title="Select,Epoll"></a>Select,Epoll</h4><ul>
+<li><p>一次ＩＯ访问，需要先将数据拷贝进内核缓冲区，再拷贝到应用程序地址空间。</p>
 </li>
 <li><p>阻塞</p>
 </li>
 <li><ul>
-<li>进程自我阻塞，select，sleep等</li>
+<li>进程发起read请求，等待状态下进程主动阻塞</li>
 </ul>
 </li>
-<li><p>结束（僵尸）</p>
+<li><p>非阻塞</p>
 </li>
 <li><ul>
-<li>wait父进程等待子进程结束，帮助销毁回收内核中的僵尸PCB数据</li>
-<li>exit只能释放自己的内存，关闭文件连接，释放内存，检查父进程是否存活，清理僵尸进程</li>
+<li>进程不断的主动询问内核，返回ｅｒｒｏｒ</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><p>cpu调度</p>
+<li><p>I/O多路复用</p>
 </li>
 <li><ul>
-<li><p>从就绪队列中选择一个进程/线程，进入运行态</p>
+<li>单个process就可以同时处理多个网络连接的IO，select，poll，epoll这个function会不断的轮询所负责的所有socket，，当某个socket有数据到达了，就通知用户进程。</li>
+</ul>
 </li>
-<li><p>上下文切换</p>
+<li><p>如何知道接收了数据：</p>
 </li>
 <li><ul>
-<li>切换当前cpu任务，从一个进程/线程进入下一个</li>
-<li>保存当前pcb/tcb中的上下文cpu状态</li>
-<li>读取下一个进程/线程的上下文</li>
+<li>网卡把数据写入内存后，向cpu发出一个中断信号，操作系统就知道有新数据来了</li>
 </ul>
 </li>
-<li><p>原则</p>
+<li><p>阻塞为什么不占用cpu资源</p>
 </li>
 <li><ul>
-<li>cpu使用率，吞吐量（单位时间总完成），周转时间，等待时间，响应时间，公平</li>
+<li>进程阻塞，进入等待队列（从cpu轮询的工作队列中移出），socket创建一个由文件系统管理的对象，这个socket对象包含了发送接收缓冲区以及等待队列的成员，当网卡通知cpu有数据到达，cpu执行中断程序，把网络数据写入socket接收缓冲区，再唤醒等待队列的进程</li>
 </ul>
 </li>
-<li><p>策略</p>
+<li><p>如何同时监视多个socket的数据？</p>
+</li>
+<li><p>select：</p>
 </li>
 <li><ul>
-<li><p>FCFS先来先服务</p>
+<li><p>如果程序A同时监视多个socket，那么就把该进程分别加入这多个socket的等待队列中，这样任何一个socket收到数据，都会唤醒进程，但之后程序需要遍历socket列表，才能得到具体是哪个socket就绪了。</p>
 </li>
-<li><p>短进程优先</p>
-</li>
-<li><p>最高响应比优先R = （等待+执行）/等待</p>
-</li>
-<li><p>轮询（定义合适的时间片，减少上下文切换开销）</p>
-</li>
-<li><p>多级反馈队列</p>
+<li><p>缺点：</p>
 </li>
 <li><ul>
-<li>多级，高优先级队列先执行</li>
-<li>各个队列内部可以选择不同的策略</li>
-<li>反馈，任务随着运行时间动态优先级下降和上升</li>
+<li>每次调用需要把进程加入所有监视的socket等待队列中，每次唤醒也需要遍历寻找和移除，因此每次都要将整个FDS列表传给内核，开销很大。</li>
+<li>最大监视数1024</li>
 </ul>
-</li>
-<li><p>公平共享调度，面对多用户</p>
 </li>
 </ul>
 </li>
-<li><p>优先级反转</p>
+<li><p>epoll：</p>
 </li>
 <li><ul>
-<li>ABC优先级任务，C占用了x资源，A等待x资源即等待C的释放，但B优先级高于C，所以C需要等待B，导致A被低优先级B影响</li>
-<li>优先级继承，或设置资源优先级</li>
-</ul>
+<li><p>功能分离，用epoll_ctl维护等待队列，用epoll_wait阻塞进程</p>
 </li>
-</ul>
-</li>
-<li><p>linux调度器</p>
+<li><p>epoll_create:内核创建一个event poll对象，也是文件系统一员，有自己的等待队列</p>
 </li>
 <li><ul>
-<li><p>O（n）</p>
+<li>就绪列表rdlist，保存所有就绪的socket，避免遍历（双向链表实现）</li>
+<li>等待队列，连进程</li>
+<li>索引结构，保存socket，用红黑树</li>
+</ul>
+</li>
+<li><p>监视过程变为把eventpoll对象添加到每个socket的等待队列中，收到数据后，中断程序要做的是操作eventpoll对象，给rdlist添加socket引用，所以当epoll_wait的时候，如果rdlist不为空直接返回</p>
+</li>
+</ul>
+</li>
+<li><p>水平触发与边缘触发</p>
 </li>
 <li><ul>
-<li>就绪队列遍历问题</li>
-<li>多核cpu扩展性问题，通过自旋锁满足多个cpu对队列的并发访问</li>
-<li>cpu空转问题，全部进程时间片被耗尽后需要重新计算时间片</li>
-<li>一个进程会在多个cpu上跳来跳去</li>
-<li>实时调度性能一般</li>
+<li>水平触发：每次文件描述符就绪后，一遍一次IO没有执行完，下次epoll_wait时还是就绪态，还可以继续执行。只要缓冲区不空就可以读，不满就可以写，如果没有一次性读写完，下次还会提示就绪并读写。这样系统中如果有很多并不需要读写但是就绪的文件描述符，每次都要返回。降低了效率。</li>
+<li>边缘触发：如果一次没有执行完，直到下次IO可读写事件发生前都不会再有通知，也就是只要0变1的上升沿才会触发，丢失了剩余的数据。在发生文件描述符就绪时，采用非阻塞的方式尽可能多的进行IO。</li>
 </ul>
 </li>
-<li><p>O（1）</p>
+</ul>
+<ul>
+<li><p>高并发场景下，对消息的读取和分割可能和epoll_wait在不同的线程中，这时候如果选择LT，那么在读完数据前，epoll_wait会不停的无谓醒来。</p>
+</li>
+<li><p>饥饿现象：</p>
 </li>
 <li><ul>
-<li>每个CPU都有一个runable队列，把大锁变成小锁</li>
-<li>优先级反馈队列</li>
-<li>负载层</li>
-<li>抢占式内核</li>
-</ul>
-</li>
-<li><p>CFS</p>
-</li>
-<li><ul>
-<li>CFS调度器的公平就是保证所有的可运行状态的进程按照权重分配其CPU资源</li>
-<li>红黑树，虚拟时间轴</li>
+<li>在边缘触发条件下，存在某个就绪的文件描述符上有大量的输入，会出现饥饿现象</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
+<h4 id="用epoll实现定时器"><a href="#用epoll实现定时器" class="headerlink" title="用epoll实现定时器"></a>用epoll实现定时器</h4><h4 id="用epoll处理signal"><a href="#用epoll处理signal" class="headerlink" title="用epoll处理signal"></a>用epoll处理signal</h4><p>将signal转换为对一个文件描述符的读写，初始化一个管道，一端read，一端write，其中read添加到epoll中，这样当信号来的时候，将信号写入wirte端，read端的文件描述符上的read事件被触发，epoll_wait就返回了</p>
 
             </article>
             <hr>
@@ -389,15 +312,15 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/07/05/Epoll/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Epoll</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
+                    
+                      <a href="/2020/07/05/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/">
+                        <span class="hidden-mobile">进程与线程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </div>
                 </div>
@@ -533,7 +456,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "进程与线程&nbsp;",
+        "Epoll&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
