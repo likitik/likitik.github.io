@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>TCP基础</title>
+    <link href="/2020/07/08/TCP%E5%9F%BA%E7%A1%80/"/>
+    <url>/2020/07/08/TCP%E5%9F%BA%E7%A1%80/</url>
+    
+    <content type="html"><![CDATA[<h4 id="TCP基础"><a href="#TCP基础" class="headerlink" title="TCP基础"></a>TCP基础</h4><p>面向连接的，一对一，需要建立连接</p><p>可靠传输，全双工服务</p><p>面向字节流的，消息无边界</p><p>首部20字节，其中包括标志位（SYN，FIN，RST，ACK，URG，PSH），窗口大小</p><p>源端口，目的端口，序列号seq，应答号ack，校验和等</p><p>序列号处理包乱序，应答号确认不丢包</p><h4 id="最大连接数："><a href="#最大连接数：" class="headerlink" title="最大连接数："></a>最大连接数：</h4><p>对于客户端，每次需要绑定本地空闲端口，最大65535，实际3万多可用，由于TIME_WAIT所以其实每秒不超过500</p><p>对于服务端，受内存和socket文件描述符限制</p><h4 id="常见场景："><a href="#常见场景：" class="headerlink" title="常见场景："></a>常见场景：</h4><p>FTP，HTTP/HTTPS</p><h4 id="三次握手："><a href="#三次握手：" class="headerlink" title="三次握手："></a>三次握手：</h4><img src="https://cdn.jsdelivr.net/gh/likitik/helloworld@master/img/B703D972-AD7E-429D-BC27-5A03362584A0.png" srcset="/img/loading.gif" alt="B703D972-AD7E-429D-BC27-5A03362584A0" style="zoom:67%;" /><p>第三次可以携带数据，如http-GET</p><p>为了避免影响，初始序列号是随机的</p><p> ISN = M（时钟）+F（四元组hash）</p><p>netstat -napt</p><p>为什么需要三次握手</p><ul><li>避免历史连接，如果没有三次握手，一个旧的syn包被确认了，就代表一个历史的错误连接建立了。而有三次握手，客户端会根据历史上下文判断该ack错误，而发rst中止连接。</li><li>同步双方序列号，四次合三次的过程</li><li>避免冗余连接，syn包阻塞，会重新发，服务器端全部建立，造成冗余无效链接，浪费。</li></ul><h4 id="四次挥手："><a href="#四次挥手：" class="headerlink" title="四次挥手："></a>四次挥手：</h4><img src="https://cdn.jsdelivr.net/gh/likitik/helloworld@master/img/A046A75D-2F4D-4238-B691-ECEDC6E7B070.png" srcset="/img/loading.gif" alt="A046A75D-2F4D-4238-B691-ECEDC6E7B070" style="zoom:67%;" /><p>如果客户端最后的ACK丢失了，会触发服务端超时从而重发FIN包</p><p>收到FIN包后重发ACK给服务端，一来一回正好两个MSL（报文最大生存时间）</p><h4 id="TIME-WAIT"><a href="#TIME-WAIT" class="headerlink" title="TIME_WAIT:"></a>TIME_WAIT:</h4><ul><li><p>确保两个方向上的数据包都被丢弃了，防止被延迟的旧连接的数据包被接收</p></li><li><p>保证连接正确关闭，确保最后的ACK被服务端收到，否则，服务端会对下次发起的请求直接回复RST</p></li></ul><p>解决大量TIME_WAIT</p><ul><li><p>设置关闭tcp连接直接发送rst</p></li><li><p>允许复用time_wait中的tcp连接</p></li></ul><h4 id="如果已经建立了连接，但是客户端突然出现故障了怎么办？"><a href="#如果已经建立了连接，但是客户端突然出现故障了怎么办？" class="headerlink" title="如果已经建立了连接，但是客户端突然出现故障了怎么办？"></a>如果已经建立了连接，但是客户端突然出现故障了怎么办？</h4><p>TCP保活机制：每隔一个时间间隔，发送探测报文</p><h4 id="滑动窗口："><a href="#滑动窗口：" class="headerlink" title="滑动窗口："></a>滑动窗口：</h4><p>滑动窗口是为了解决接收方和发送方能力不匹配的问题，减少重传</p><p>tcp报文中窗口大小，表明自己的接收能力</p><h4 id="拥塞控制："><a href="#拥塞控制：" class="headerlink" title="拥塞控制："></a>拥塞控制：</h4><p>拥塞控制避免一开始大量流量进入网络，超过网络负载能力，造成延迟等待</p><ul><li><p>慢开始</p></li><li><ul><li>在TCP刚建立连接或者当网络发生拥塞超时的时候，将拥塞窗口cwnd设置成一个报文段大小，并且当cwnd&lt;=ssthresh时，指数方式增大cwnd（即每经过一个传输轮次，cwnd加倍）。</li></ul></li><li><p>拥塞避免</p></li><li><ul><li>当cwnd&gt;=sshresh时，为避免网络发生拥塞，进入拥塞避免算法，这时候以线性方式增大cwnd（即每经过一个传输轮次，cwnd只增大一个报文段）</li></ul></li><li><p>快重传</p></li><li><ul><li>是指发送方如果连续收到三个重复确认的ACK，则立即重传该报文段，而不必等待重传定时器超时后再重传。</li></ul></li><li><p>快恢复</p></li><li><ul><li>指当采用快速重传算法的时候，直接执行拥塞避免算法。这样可以提高传输效率。</li></ul></li></ul><p>Ssthresh通常设置成发送拥塞是的发送窗口的一半。必须&gt;=2.</p><h4 id="TCP粘包："><a href="#TCP粘包：" class="headerlink" title="TCP粘包："></a>TCP粘包：</h4><p>由于面向字节流，会对应用层数据组合或拆分，应用层没有定义消息边界导致接收方无法重组。</p><p>常见http头增加负载长度字段</p><h4 id="Nagle算法"><a href="#Nagle算法" class="headerlink" title="Nagle算法"></a>Nagle算法</h4><p>主要是避免发送小的数据包，要求TCP连接上最多只能有一个未被确认的小分组，在该分组的确认到达之前不能发送其他的小分组。</p><h4 id="syn攻击"><a href="#syn攻击" class="headerlink" title="syn攻击"></a>syn攻击</h4><p>syn队列到accept队列到accept()函数到应用</p><p>syn队列被占满</p><p>可以用cookie，当syn满了之后，将cookie返回给客户端，之后如果合理的ack，直接进入accept队列</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>计算机网络</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>常用java内存分析工具</title>
     <link href="/2020/07/06/%E5%B8%B8%E7%94%A8java%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/"/>
     <url>/2020/07/06/%E5%B8%B8%E7%94%A8java%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/</url>
