@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Yan">
   <meta name="keywords" content="">
-  <title>TCP基础 - Likitik</title>
+  <title>数据湖简介 - Likitik</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -152,8 +152,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-07-08 14:32">
-      2020年7月8日 下午
+    <time datetime="2020-07-09 17:58">
+      2020年7月9日 下午
     </time>
   </div>
 
@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1k 字
+      972 字
     </span>
   
 
@@ -204,81 +204,38 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h4 id="TCP基础"><a href="#TCP基础" class="headerlink" title="TCP基础"></a>TCP基础</h4><p>面向连接的，一对一，需要建立连接</p>
-<p>可靠传输，全双工服务</p>
-<p>面向字节流的，消息无边界</p>
-<p>首部20字节，其中包括标志位（SYN，FIN，RST，ACK，URG，PSH），窗口大小</p>
-<p>源端口，目的端口，序列号seq，应答号ack，校验和等</p>
-<p>序列号处理包乱序，应答号确认不丢包</p>
-<h4 id="最大连接数："><a href="#最大连接数：" class="headerlink" title="最大连接数："></a>最大连接数：</h4><p>对于客户端，每次需要绑定本地空闲端口，最大65535，实际3万多可用，由于TIME_WAIT所以其实每秒不超过500</p>
-<p>对于服务端，受内存和socket文件描述符限制</p>
-<h4 id="常见场景："><a href="#常见场景：" class="headerlink" title="常见场景："></a>常见场景：</h4><p>FTP，HTTP/HTTPS</p>
-<h4 id="三次握手："><a href="#三次握手：" class="headerlink" title="三次握手："></a>三次握手：</h4><img src="https://cdn.jsdelivr.net/gh/likitik/helloworld@master/img/B703D972-AD7E-429D-BC27-5A03362584A0.png" srcset="/img/loading.gif" alt="B703D972-AD7E-429D-BC27-5A03362584A0" style="zoom:67%;" />
-
-<p>第三次可以携带数据，如http-GET</p>
-<p>为了避免影响，初始序列号是随机的</p>
-<p> ISN = M（时钟）+F（四元组hash）</p>
-<p>netstat -napt</p>
-<p>为什么需要三次握手</p>
+              <h3 id="什么是数据湖？"><a href="#什么是数据湖？" class="headerlink" title="什么是数据湖？"></a>什么是数据湖？</h3><p>AWS：以<strong>任意规模</strong>将您的<strong>所有数据</strong>存储在一个<strong>集中式</strong>存储库中</p>
+<p>允许以任意规模存储所有结构化和非结构化的数据，可以按照原样存储而无需对数据进行结构化处理，并运行不同类型的分析。</p>
 <ul>
-<li>避免历史连接，如果没有三次握手，一个旧的syn包被确认了，就代表一个历史的错误连接建立了。而有三次握手，客户端会根据历史上下文判断该ack错误，而发rst中止连接。</li>
-<li>同步双方序列号，四次合三次的过程</li>
-<li>避免冗余连接，syn包阻塞，会重新发，服务器端全部建立，造成冗余无效链接，浪费。</li>
-</ul>
-<h4 id="四次挥手："><a href="#四次挥手：" class="headerlink" title="四次挥手："></a>四次挥手：</h4><img src="https://cdn.jsdelivr.net/gh/likitik/helloworld@master/img/A046A75D-2F4D-4238-B691-ECEDC6E7B070.png" srcset="/img/loading.gif" alt="A046A75D-2F4D-4238-B691-ECEDC6E7B070" style="zoom:67%;" />
-
-<p>如果客户端最后的ACK丢失了，会触发服务端超时从而重发FIN包</p>
-<p>收到FIN包后重发ACK给服务端，一来一回正好两个MSL（报文最大生存时间）</p>
-<h4 id="TIME-WAIT"><a href="#TIME-WAIT" class="headerlink" title="TIME_WAIT:"></a>TIME_WAIT:</h4><ul>
-<li><p>确保两个方向上的数据包都被丢弃了，防止被延迟的旧连接的数据包被接收</p>
+<li><p>首先要能满足导入任何数量，任意来源的实时数据，可以以原始形式入湖，从而节省定义数据结构，schema，和转换的时间。</p>
 </li>
-<li><p>保证连接正确关闭，确保最后的ACK被服务端收到，否则，服务端会对下次发起的请求直接回复RST</p>
+<li><p>能够存储关系和非关系数据，并通过对数据进行发现，编目，建立索引来了解数据湖中的数据。</p>
+</li>
+<li><p>数据湖能够允许任何角色，以各自的框架来访问分析数据，比如spark，presto sql等</p>
+</li>
+<li><p>能够报告历史数据，进行机器学习等能力。</p>
 </li>
 </ul>
-<p>解决大量TIME_WAIT</p>
-<ul>
-<li><p>设置关闭tcp连接直接发送rst</p>
+<h3 id="数据湖-vs-数据仓库"><a href="#数据湖-vs-数据仓库" class="headerlink" title="数据湖 vs 数据仓库"></a>数据湖 vs 数据仓库</h3><ul>
+<li><p>数据仓库是一个优化的数据库，用于分析来自事务系统和业务线应用程序产生的关系数据，存储的是大量结构化的数据。</p>
+<p>比如hive就是通过元数据来描述Hdfs上的结构化文本数据，也就是通过事先定义数据结构和 Schema 以优化快速 SQL 查询，其中结果通常用于操作报告和分析。</p>
+<p>数据进入数仓前会经过了ETL清理、丰富和转换，因此可以充当用户可信任的“单一信息源”。</p>
 </li>
-<li><p>允许复用time_wait中的tcp连接</p>
+<li><p>数据湖有所不同，因为它存储来自业务线应用程序的关系数据，以及来自移动应用程序、IoT 设备和社交媒体的非关系数据。</p>
+<p>捕获数据时，未定义数据结构或 Schema。也就是可以存储所有数据，无需ETL。</p>
+<p>可以对数据使用不同类型的分析（如 SQL 查询、大数据分析、全文搜索、实时分析和机器学习）</p>
 </li>
-</ul>
-<h4 id="如果已经建立了连接，但是客户端突然出现故障了怎么办？"><a href="#如果已经建立了连接，但是客户端突然出现故障了怎么办？" class="headerlink" title="如果已经建立了连接，但是客户端突然出现故障了怎么办？"></a>如果已经建立了连接，但是客户端突然出现故障了怎么办？</h4><p>TCP保活机制：每隔一个时间间隔，发送探测报文</p>
-<h4 id="滑动窗口："><a href="#滑动窗口：" class="headerlink" title="滑动窗口："></a>滑动窗口：</h4><p>滑动窗口是为了解决接收方和发送方能力不匹配的问题，减少重传</p>
-<p>tcp报文中窗口大小，表明自己的接收能力</p>
-<h4 id="拥塞控制："><a href="#拥塞控制：" class="headerlink" title="拥塞控制："></a>拥塞控制：</h4><p>拥塞控制避免一开始大量流量进入网络，超过网络负载能力，造成延迟等待</p>
-<ul>
-<li><p>慢开始</p>
-</li>
-<li><ul>
-<li>在TCP刚建立连接或者当网络发生拥塞超时的时候，将拥塞窗口cwnd设置成一个报文段大小，并且当cwnd&lt;=ssthresh时，指数方式增大cwnd（即每经过一个传输轮次，cwnd加倍）。</li>
-</ul>
-</li>
-<li><p>拥塞避免</p>
-</li>
-<li><ul>
-<li>当cwnd&gt;=sshresh时，为避免网络发生拥塞，进入拥塞避免算法，这时候以线性方式增大cwnd（即每经过一个传输轮次，cwnd只增大一个报文段）</li>
-</ul>
-</li>
-<li><p>快重传</p>
-</li>
-<li><ul>
-<li>是指发送方如果连续收到三个重复确认的ACK，则立即重传该报文段，而不必等待重传定时器超时后再重传。</li>
-</ul>
-</li>
-<li><p>快恢复</p>
-</li>
-<li><ul>
-<li>指当采用快速重传算法的时候，直接执行拥塞避免算法。这样可以提高传输效率。</li>
-</ul>
+<li><p>也就是说数据仓库入库时需要做ETL，库里都是结构化数据，而数据湖入湖时可以保留原始格式，入湖后再定义架构，元数据，仅在分析时再进行转换。</p>
 </li>
 </ul>
-<p>Ssthresh通常设置成发送拥塞是的发送窗口的一半。必须&gt;=2.</p>
-<h4 id="TCP粘包："><a href="#TCP粘包：" class="headerlink" title="TCP粘包："></a>TCP粘包：</h4><p>由于面向字节流，会对应用层数据组合或拆分，应用层没有定义消息边界导致接收方无法重组。</p>
-<p>常见http头增加负载长度字段</p>
-<h4 id="Nagle算法"><a href="#Nagle算法" class="headerlink" title="Nagle算法"></a>Nagle算法</h4><p>主要是避免发送小的数据包，要求TCP连接上最多只能有一个未被确认的小分组，在该分组的确认到达之前不能发送其他的小分组。</p>
-<h4 id="syn攻击"><a href="#syn攻击" class="headerlink" title="syn攻击"></a>syn攻击</h4><p>syn队列到accept队列到accept()函数到应用</p>
-<p>syn队列被占满</p>
-<p>可以用cookie，当syn满了之后，将cookie返回给客户端，之后如果合理的ack，直接进入accept队列</p>
+<h3 id="下一代数据仓库"><a href="#下一代数据仓库" class="headerlink" title="下一代数据仓库"></a>下一代数据仓库</h3><h4 id="AWS-Lake-Formation"><a href="#AWS-Lake-Formation" class="headerlink" title="AWS Lake Formation"></a>AWS Lake Formation</h4><p>AWS 将 AWS Lake Formation 描述为一种用于决策支持和人工智能决策自动化的超级数据仓库。AWS 还特别强调，该服务旨在管理数据，“然后用户就可以选择他们的分析和机器学习服务，如 Amazon EMR for Spark、Amazon Redshift、Amazon Athena、Amazon SageMaker 和 Amazon QuickSight”。</p>
+<h4 id="Delta-Lake"><a href="#Delta-Lake" class="headerlink" title="Delta Lake"></a>Delta Lake</h4><p>Delta Lake 位于数据中心或云平台的数据存储平台之上，聚合、清理和管理数据湖中的数据集，以便更好地为机器学习提供支持。 Delta Lake 可以支持批次数据和流式数据。也支持 ACID 事务，可以支持数百个应用程序的并发写入和读取。</p>
+<h3 id="DLA数据湖分析"><a href="#DLA数据湖分析" class="headerlink" title="DLA数据湖分析"></a>DLA数据湖分析</h3><p>​        <a href="https://help.aliyun.com/product/70174.html?spm=a2c4g.11186623.6.540.d60ba1c0ep8iQ9" target="_blank" rel="noopener"><strong>数据湖分析</strong></a>（Data Lake Analytics，DLA）是无服务器（Serverless）化的云上交互式查询分析服务。无需ETL，就可通过此服务在云上通过标准JDBC直接对阿里云OSS、TableStore的数据轻松进行查询和分析，以及无缝集成商业分析工具。    </p>
+<p>​        数据湖的构建如图所示：</p>
+<p>​                <img src="https://cdn.jsdelivr.net/gh/likitik/helloworld@master/img/image-20200709164735633.png" srcset="/img/loading.gif" alt="image-20200709164735633" style="zoom:50%;" /></p>
+<p>​        其中<strong>一键建仓</strong>支持阿里云关系型数据库RDS（Relational Database Service）或者云服务器ECS（Elastic Compute Service）自建数据库，只需在DLA控制台配置数据源和OSS目标位置，系统即可按照设定的数据同步时间自动、无缝的把数据源中的数据同步到目标数据仓库OSS中，同时在数据仓库和DLA中创建与数据源表相同的表结构，基于目标数据仓库进行数据分析，不影响数据源端的线上业务运行。</p>
+<p>​        <strong>实时数据湖</strong>架构如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/likitik/helloworld@master/img/image-20200709164457572.png" srcset="/img/loading.gif" alt="image-20200709164457572"></p>
 
             </article>
             <hr>
@@ -289,7 +246,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+                      <a class="hover-with-bg" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
                     
                   </div>
                 
@@ -302,18 +259,12 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/07/09/%E6%95%B0%E6%8D%AE%E6%B9%96%E7%AE%80%E4%BB%8B/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">数据湖简介</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/07/06/%E5%B8%B8%E7%94%A8java%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/">
-                        <span class="hidden-mobile">常用java内存分析工具</span>
+                      <a href="/2020/07/08/TCP%E5%9F%BA%E7%A1%80/">
+                        <span class="hidden-mobile">TCP基础</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -452,7 +403,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "TCP基础&nbsp;",
+        "数据湖简介&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
