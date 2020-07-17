@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Yan">
+  <meta name="keywords" content="">
+  <title>GOODS谷歌数据湖管理系统 - Likitik</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 80vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Likitik</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://cdn.jsdelivr.net/gh/likitik/helloworld@master/img/page.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-07-17 23:49">
+      2020年7月17日 晚上
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <h1 id="Managing-Google’s-data-lake-an-overview-of-the-GOODS-system"><a href="#Managing-Google’s-data-lake-an-overview-of-the-GOODS-system" class="headerlink" title="Managing Google’s data lake: an overview of the GOODS system"></a>Managing Google’s data lake: an overview of the GOODS system</h1><blockquote>
+<p>会议：Bulletin of the IEEE Computer Society Technical Committee on Data Engineering</p>
+<p>year：2016</p>
+</blockquote>
+<p>In many cases, engineers and data scientists do not use centralized data-management systems and end up creating what became known as a data lake—a collection of datasets that often are not well organized or not organized at all and where one needs to “ﬁsh” for useful datasets. </p>
+<p><strong>数据湖</strong>：半结构化或非结构化的数据集合，是一种把各类异构数据进行集中存储的架构</p>
+<ul>
+<li>由于企业内部数据的爆发增长，而关于数据的目的，价值，来源的各种信息不全，导致数据被孤立在数据来源的团队中，从而造成机会和生产力的重大损失。</li>
+</ul>
+<h2 id="GOODS-system：Google-Dataset-Search"><a href="#GOODS-system：Google-Dataset-Search" class="headerlink" title="GOODS system：Google Dataset Search"></a>GOODS system：Google Dataset Search</h2><ul>
+<li><p>组织，管理数据湖中数据集的系统</p>
+</li>
+<li><p>GOODS operates in a <strong>post-hoc</strong> manner：先有数据集后有元数据，即入湖之后再收集和聚合数据集的元数据。</p>
+</li>
+<li><p>It infers metadata and relationships among datasets by processing additional sources such as logs and information about dataset owners and their projects, by analyzing content of the datasets, and by collecting input from the G OODS users.</p>
+</li>
+<li><p>如何推断出数据集的元数据信息？</p>
+<ul>
+<li>通过分析数据集内容</li>
+<li>通过处理额外的信息，如日志，用户信息，项目信息</li>
+<li>通过用户输入的信息</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/likitik/helloworld@master/img/image-20200716095229246.png" srcset="/img/loading.gif" alt="image-20200716095229246" style="zoom:67%;" />
+</li>
+<li><p>GOODS不断爬取不同的存储系统和生产基础设施(例如，运行管道中的日志)，以发现存在哪些数据集，并收集关于每个数据集的元数据(例如，所有者、访问时间、内容特性、访问连接)。</p>
+</li>
+<li><p>GOODS在一个中央目录中聚合这些元数据，并关联特定数据集的元数据与其他数据集信息。然后，GOODS使用这个目录为谷歌工程师提供数据集管理服务。（<strong>数据价值</strong>）</p>
+<ul>
+<li>覆盖所有数据集的搜索引擎，具有缩小搜索结果的功能，帮助工程师和分析师找到最相关的数据集。</li>
+<li>数据集配置文件页面，显示GOODS记录的关于特定数据集的元数据，从而帮助用户理解数据集本身和与其他数据集的关系。配置文件页面与其他工具集成，提供对数据集的进一步处理能力，帮助用户对数据进行操作。</li>
+<li>一个监视服务，允许团队监视他们拥有的数据集的特性，例如大小、内容中值的分布和可用性。用户可以配置此监视服务，以便在功能意外更改时发出警报。</li>
+<li>一个注释服务，允许用户扩展数据集的元数据与在某些领域特定的注释，可以出现在配置文件页面。例如，数据集所有者可以为数据集的内容提供文本描述，或者附加一个可视化工具。</li>
+</ul>
+</li>
+</ul>
+<h3 id="元数据发现能力"><a href="#元数据发现能力" class="headerlink" title="元数据发现能力"></a>元数据发现能力</h3><p>数据湖管理系统的主要目标是为其中的数据集收集元数据。我们可以独立地查看每个数据集的元数据。</p>
+<h4 id="场景价值"><a href="#场景价值" class="headerlink" title="场景价值"></a>场景价值</h4><ul>
+<li><p>规范审核：schema审核团队用来审核其他团队的数据集模式，从而确保其数据集符合使用规范</p>
+</li>
+<li><p>数据血缘：元数据发现产生的元数据信息包含数据源链接，<em>即数据集X是由生产作业Y产生的</em>，从而形成完整的数据链接的传递闭包，形成数据集谱系依赖关系，对于团队A，希望使用数据集B，但是发现数据集B被过度修饰过了，那么通过谱系可以容易的找到数据集B的上游数据集C，从而完成自己的任务。</p>
+</li>
+<li><p>可视化：通过注释服务把可视化附加到用于ML pipelines的训练数据集上，从而帮助用户理解特征的分布。</p>
+</li>
+</ul>
+<h3 id="构建企业数据湖的挑战"><a href="#构建企业数据湖的挑战" class="headerlink" title="构建企业数据湖的挑战"></a>构建企业数据湖的挑战</h3><h4 id="如何收集，识别，推断，关联元数据"><a href="#如何收集，识别，推断，关联元数据" class="headerlink" title="如何收集，识别，推断，关联元数据"></a>如何收集，识别，推断，关联元数据</h4><p>两个例子：</p>
+<ul>
+<li>查找项目X拥有的所有数据集。如果计划删除X项目拥有的数据集，需要通知哪些团队。这个查询需要了解不同团队的组成、数据集所有权和起源关系。</li>
+<li>查找特定版本的代码中方法X的生产作业所编写的所有数据集。这可以帮助识别可能受到错误代码影响的数据集。</li>
+</ul>
+<p>问题：</p>
+<ul>
+<li>不能通过穷举扫描大规模数据集，不可能逐个比较</li>
+<li>使用生产数据集的作业日志来识别血缘，但不同团队，不同作业的日志格式是不同的</li>
+</ul>
+<h4 id="元数据提取需要可伸缩"><a href="#元数据提取需要可伸缩" class="headerlink" title="元数据提取需要可伸缩"></a>元数据提取需要可伸缩</h4><p>问题：</p>
+<ul>
+<li>数据规模超大</li>
+<li>数据集每天都有大规模的新增和删除</li>
+<li>有很大一部分短暂存在的数据集</li>
+<li>提取单个数据集的元数据成本很高，需要读取文件存储系统中的文件内容</li>
+</ul>
+<p>解决：</p>
+<ul>
+<li>数据集优先级排序</li>
+</ul>
+<h4 id="Post-hoc-Management-of-Metadata"><a href="#Post-hoc-Management-of-Metadata" class="headerlink" title="Post-hoc Management of Metadata"></a>Post-hoc Management of Metadata</h4><p>​    传统的企业数据管理系统需要规定设计特定的API来访问数据集，可以提供非常精确的元数据管理，但是需要进入系统前组织好元数据。而数据湖希望不影响团队实践的前提下组织并产生价值。</p>
+<p>问题：</p>
+<ul>
+<li><p>面对不同存储格式，有对应的解析工具，可能产生多种候选的模式</p>
+</li>
+<li><p>跨各种异构的数据源，统一视图</p>
+</li>
+</ul>
+<h3 id="数据湖关系图"><a href="#数据湖关系图" class="headerlink" title="数据湖关系图"></a>数据湖关系图</h3><p>建立数据集与数据集之间，数据集与其他实体（如生产作业，项目，用户，代码等等）之间的关系图谱</p>
+<ul>
+<li>数据集包含关系，例如bigtable的列族是一级条目，而bigtable本身也是一级条目。</li>
+<li>数据集的产生，使用，依赖等<ul>
+<li>如日志数据，可能访问事件巨大，需要抽样，并在几个跳内物化上下游关系。</li>
+</ul>
+</li>
+<li>按时间等维度划分数据集，按照不同维度组合层次关系，每个节点对应不同粒度查看数据集。<strong><em>分区表</em></strong></li>
+<li>内容相似性，包括数据集整体级别和单个列级别。考虑数据集规模，依靠近似技术来确定哪些数据集是彼此的副本，哪些数据集具有不同的内容。通过单字段校验和+LSH（locality-sensitive hash）相似度来生成数据集指纹，从而进行数据集整体和列级别比较。<ul>
+<li>LSH算法</li>
+</ul>
+</li>
+</ul>
+<h3 id="系统设计"><a href="#系统设计" class="headerlink" title="系统设计"></a>系统设计</h3><h4 id="利用关系图"><a href="#利用关系图" class="headerlink" title="利用关系图"></a>利用关系图</h4><p>以牺牲精度为代价，避免识别每个成员，节省元数据提取，提高性能。</p>
+<ul>
+<li>相同集群，少数数据集的元数据可以代表整体，并传播到相似集群</li>
+<li>相同作业产生的不同版本数据集，通常是相同schema，不需要识别每个版本</li>
+<li>用户已经提供的数据集描述，可以覆盖应用到整个数据集的元数据</li>
+<li>元数据提取过于昂贵时，可以通过关联数据集传播的方式传播元数据</li>
+</ul>
+<p>可以支持各种链接</p>
+<ul>
+<li><p>从源代码的schema定义处跳转到使用该模式的所有数据集目录</p>
+</li>
+<li><p>团队新成员找到该团队产生的所有数据集列表目录</p>
+</li>
+<li><p>数据集配置页面跳转到拥有者所有数据集列表目录</p>
+<p>。。。</p>
+</li>
+</ul>
+<h4 id="模块设计"><a href="#模块设计" class="headerlink" title="模块设计"></a>模块设计</h4><ul>
+<li>GOODS后端使用大量不同的批处理作业从各种系统收集信息，并将新信息添加和更新到GOODS目录中。</li>
+<li>首先，各模块优先级问题<ul>
+<li>识别数据集存在，所属等基本信息，对于确保系统状态最新和数据集访问控制变化至关重要。</li>
+<li>schema analyzer识别模式的模块时间敏感性不高，可以利用空闲时间。</li>
+</ul>
+</li>
+<li>第二，各模块依赖关系问题<ul>
+<li>将依赖模块尽可能分到同组中，可以减少从后端持久存储读取的总字节数。</li>
+</ul>
+</li>
+<li>第三，对故障模块的隔离<ul>
+<li>检查数据集内容的模块会使用不同的schemaReader库，可能造成崩溃和循环，所以应该在单独的进程沙箱化的处理这些危险作业，并使用监视线程将长暂停转换为崩溃。</li>
+</ul>
+</li>
+<li>最后，不同模块计算复杂度不同，资源占用情况也不同。<ul>
+<li>避免重新运行计算昂贵的模块。</li>
+</ul>
+</li>
+</ul>
+<h4 id="搜索排名"><a href="#搜索排名" class="headerlink" title="搜索排名"></a>搜索排名</h4><p>对于数据集搜索系统，如何对结果排序？</p>
+<p>用户搜索目的应该影响搜索排名结果，即数据湖管理系统应支持多种排序方法，并允许用户在搜索时选择使用哪种！</p>
+<h3 id="未来的发展方向"><a href="#未来的发展方向" class="headerlink" title="未来的发展方向"></a>未来的发展方向</h3><ul>
+<li>数据集社区文化，允许用户共享和交换数据集的信息，并在目录中增加领域特定知识的元数据。目标是共同管理数据湖。可以添加更多类似于社区的功能，包括对数据集的评论、问答功能等等。其目标是培养联合数据管理的文化，以及向数据湖中添加新数据集的最佳实践。</li>
+<li>支持比较数据湖快照，从而发现趋势。</li>
+<li>通过连续查询监控数据湖内容</li>
+<li>丰富的数据分析对数据湖是有价值的</li>
+<li>因为需要通过post-hoc的方式分析数据集，所以会有时延，而对于希望实时的用户，提供一种混合方法，即为这些团队提供注册数据集和向数据目录中贡献元数据的api。</li>
+<li>数据湖的元数据信息不仅要帮助用户理解数据集，也要让用户发现数据集的价值，可以做什么，可以如何在其他工具中使用数据湖。</li>
+</ul>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E6%B9%96/">数据湖</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/13/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E6%B9%96%E5%8F%98%E6%88%90%E6%95%B0%E6%8D%AE%E6%B2%BC%E6%B3%BD/">
+                        <span class="hidden-mobile">如何防止数据湖变成数据沼泽</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "GOODS谷歌数据湖管理系统&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
