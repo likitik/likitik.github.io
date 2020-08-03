@@ -168,6 +168,130 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/08/03/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%9A%8F%E6%9C%BA%E6%8A%BD%E6%A0%B7/">蓄水池随机抽样</a>
+
+      <a href="/2020/08/03/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%9A%8F%E6%9C%BA%E6%8A%BD%E6%A0%B7/" class="index-excerpt">
+        
+        
+          
+        
+        <div>蓄水池抽样给定一个数据流，数据流长度N很大，且N直到处理完所有数据之前都不可知，请问如何在只遍历一遍数据（O(N)）的情况下，能够随机选取出m个不重复的数据，每个数据被选中的概率为m/N
+
+首先选中前m个数据组成集合A
+从m+1开始，每个元素被选中的概率为m/m+k(1&lt;=K&lt;=N-m)
+如果选中则替换A中随机一个数据
+
+
+最终选中m个数据
+
+</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-08-03
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/08/03/%E5%8F%8C%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0Trie%E6%A0%91/">双数组实现Trie树</a>
+
+      <a href="/2020/08/03/%E5%8F%8C%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0Trie%E6%A0%91/" class="index-excerpt">
+        
+        
+          
+        
+        <div>DoubleArrayTrie多使用在静态词库场景，查询性能要求高
+双数组DAT，一个数组做base，一个check- base存的是偏移量，check存的是父状态的索引
+- base[r] + c = s
+- check[s] = rTrie树本身可以等效于一个自动机在一个节点上即状态，根据下一个字符，判断转移，找到下一个节点所以转移函数，相当于一个26长度的数组但是如果节点存的是字符串，通过h</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-08-03
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/07/19/LSH%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97/">LSH相似度计算</a>
+
+      <a href="/2020/07/19/LSH%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97/" class="index-excerpt">
+        
+        
+          
+        
+        <div>比较两个向量相似性Jaccard相似度：c/(a+b)
+
+c是两个向量共同的非0值的个数
+a，b是两个向量各自非0值的个数
+
+问题：当维度很高时，计算很复杂
+解决：minHash，将n维映射到更低的m维
+minHash对两个向量做相同的随机排列，找到各自第一个非0值，则位置相同的概率也为c/(a+b)
+做m次随机排列，位置相同的概率近似为Jaccard相似性
+问题：
+
+做随机排列的复杂度很高
+
+解</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-07-19
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a class="index-header" href="/2020/07/17/GOODS%E8%B0%B7%E6%AD%8C%E6%95%B0%E6%8D%AE%E6%B9%96%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">GOODS谷歌数据湖管理系统</a>
 
       <a href="/2020/07/17/GOODS%E8%B0%B7%E6%AD%8C%E6%95%B0%E6%8D%AE%E6%B9%96%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" class="index-excerpt">
@@ -433,96 +557,19 @@ public enum  ConcreteRule </div>
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/07/05/Epoll/">Epoll</a>
-
-      <a href="/2020/07/05/Epoll/" class="index-excerpt">
-        
-        
-          
-        
-        <div>Select,Epoll
-一次ＩＯ访问，需要先将数据拷贝进内核缓冲区，再拷贝到应用程序地址空间。
-
-阻塞
 
 
-进程发起read请求，等待状态下进程主动阻塞
-
-
-非阻塞
-
-
-进程不断的主动询问内核，返回ｅｒｒｏｒ
-
-
-I/O多路复用
-
-
-单个process就可以同时处理多个网络连接的IO，select，poll，epoll这个function会不断的轮询所负责的所有socket，，当某个socket</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-05
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/07/05/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/">进程与线程</a>
-
-      <a href="/2020/07/05/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" class="index-excerpt">
-        
-        
-          
-        
-        <div>
-进程是操作系统分配资源的最小单位，是程序的实体，操作系统运行一个程序，那这个程序就是一个进程，每个进程有自己的pid进程号。操作系统会为进程分配一块内存。
-
-而线程包含在进程之中，一个进程可以并发多个线程，但这里的并发是在cpu时间片上的串行执行，同一个进程中的线程共享进程包括内存的所有资源，而每个线程只需要分配自己的一个程序计数器，栈，寄存器这些东西。在线程上的切换是由内核根据这些完成的。
-
-</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-05
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 

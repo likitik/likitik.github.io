@@ -4,6 +4,63 @@
   
   
   <entry>
+    <title>蓄水池随机抽样</title>
+    <link href="/2020/08/03/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%9A%8F%E6%9C%BA%E6%8A%BD%E6%A0%B7/"/>
+    <url>/2020/08/03/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%9A%8F%E6%9C%BA%E6%8A%BD%E6%A0%B7/</url>
+    
+    <content type="html"><![CDATA[<h4 id="蓄水池抽样"><a href="#蓄水池抽样" class="headerlink" title="蓄水池抽样"></a>蓄水池抽样</h4><p>给定一个数据流，数据流长度N很大，且N直到处理完所有数据之前都不可知，请问如何在只遍历一遍数据（O(N)）的情况下，能够随机选取出m个不重复的数据，每个数据被选中的概率为m/N</p><ul><li>首先选中前m个数据组成集合A</li><li>从m+1开始，每个元素被选中的概率为m/m+k(1&lt;=K&lt;=N-m)<ul><li>如果选中则替换A中随机一个数据</li></ul></li><li>最终选中m个数据</li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>算法</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>双数组实现Trie树</title>
+    <link href="/2020/08/03/%E5%8F%8C%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0Trie%E6%A0%91/"/>
+    <url>/2020/08/03/%E5%8F%8C%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0Trie%E6%A0%91/</url>
+    
+    <content type="html"><![CDATA[<h3 id="DoubleArrayTrie"><a href="#DoubleArrayTrie" class="headerlink" title="DoubleArrayTrie"></a>DoubleArrayTrie</h3><p>多使用在静态词库场景，查询性能要求高</p><h4 id="双数组DAT，一个数组做base，一个check"><a href="#双数组DAT，一个数组做base，一个check" class="headerlink" title="双数组DAT，一个数组做base，一个check"></a>双数组DAT，一个数组做base，一个check</h4><pre><code>- base存的是偏移量，check存的是父状态的索引- base[r] + c = s- check[s] = r</code></pre><h4 id="Trie树本身可以等效于一个自动机"><a href="#Trie树本身可以等效于一个自动机" class="headerlink" title="Trie树本身可以等效于一个自动机"></a>Trie树本身可以等效于一个自动机</h4><p>在一个节点上即状态，根据下一个字符，判断转移，找到下一个节点<br>所以转移函数，相当于一个26长度的数组<br>但是如果节点存的是字符串，通过hash然后转移，那转移函数就不只是26长度</p><h4 id="所以如果用双数组，首先要对所有字符编码，或者用hash函数"><a href="#所以如果用双数组，首先要对所有字符编码，或者用hash函数" class="headerlink" title="所以如果用双数组，首先要对所有字符编码，或者用hash函数"></a>所以如果用双数组，首先要对所有字符编码，或者用hash函数</h4><p>则表示一个整体K，由n个子元素组成，k1,k2…kn<br>对于元素ki,编码f(ki)</p><p>初始化base[0] = 1</p><p>比如如果base[r] &lt;0 说明k为一个整体的结尾,用base的负值</p><p>否则base[r] + f(ki+1) = s即转移到下个字符的下标</p><p>说明对于每个节点，需要找到一个base值，能够满足他所有的子节点check[base[r]+c] = r，即所有子节点算出来的位置都是空闲的<br>简单通过枚举来找这个base值，高级通过启发式避免掉不必要的尝试</p><h3 id="如何构造双数组"><a href="#如何构造双数组" class="headerlink" title="如何构造双数组"></a>如何构造双数组</h3><h4 id="1、已知所有词语，静态构造"><a href="#1、已知所有词语，静态构造" class="headerlink" title="1、已知所有词语，静态构造"></a>1、已知所有词语，静态构造</h4><h4 id="2、未知所有词语，动态构造"><a href="#2、未知所有词语，动态构造" class="headerlink" title="2、未知所有词语，动态构造"></a>2、未知所有词语，动态构造</h4><blockquote><p>已知所有词语，构造如下：<br>比如：<br>a<br>abc<br>bd<br>编码：a-1，b-2，c-3，d-4</p></blockquote><ul><li>初始化base[0]=1</li><li>1、对于a，置base[base[0]+1] = base[2] = ？,check[2]=0</li><li>2、对于b，置base[base[0]+2] = base[3] = ? ,check[3]=0</li><li>3、对于ab，base[2] = ?,可以选择2，因为?+2是空闲的，即base[2]=-2(因为a已经结尾),check[4]=2</li><li>4、对于abc，base[4] = ?,可以选择2，因为?+3是空闲的，即base[4]=2,check[5]=4,base[5]=-1(因为c后面没了)</li><li>5、对于bd，置base[3]=?,可以选择2,因为?+4是空闲的，即base[3] = 2,check[6]=3,base[6]=-1(d后面没了)</li></ul><h4 id="结果如下："><a href="#结果如下：" class="headerlink" title="结果如下："></a>结果如下：</h4><table><thead><tr><th>state</th><th>root</th><th></th><th>a</th><th>b</th><th>ab</th><th>abc</th><th>bd</th><th></th></tr></thead><tbody><tr><td>i</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr><tr><td>base</td><td>1</td><td>0</td><td>-2</td><td>2</td><td>2</td><td>-1</td><td>-1</td><td>0</td></tr><tr><td>check</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>4</td><td>3</td><td>0</td></tr></tbody></table>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>数据结构</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>LSH相似度计算</title>
+    <link href="/2020/07/19/LSH%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97/"/>
+    <url>/2020/07/19/LSH%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97/</url>
+    
+    <content type="html"><![CDATA[<h3 id="比较两个向量相似性"><a href="#比较两个向量相似性" class="headerlink" title="比较两个向量相似性"></a>比较两个向量相似性</h3><p>Jaccard相似度：c/(a+b)</p><ul><li>c是两个向量共同的非0值的个数</li><li>a，b是两个向量各自非0值的个数</li></ul><p>问题：当维度很高时，计算很复杂</p><p>解决：minHash，将n维映射到更低的m维</p><h3 id="minHash"><a href="#minHash" class="headerlink" title="minHash"></a>minHash</h3><p>对两个向量做相同的随机排列，找到各自第一个非0值，则位置相同的概率也为c/(a+b)</p><p>做m次随机排列，位置相同的概率近似为Jaccard相似性</p><p>问题：</p><ul><li>做随机排列的复杂度很高</li></ul><p>解决：</p><ul><li>取m个针对row index的hash函数，通过hash将原位置映射到排列后的位置，从而模拟排序<ul><li>具体就是原向量A，忽略里面的0值，假如i位置为1，则计算hash(i)，k = min(k,hash(i))，取最小即为排列后首个1值的位置</li></ul></li></ul><p>问题：用户很多的情况下，计算两两用户之间，复杂度很高</p><p>解决：LSH（locality-sensitive hash）</p><h3 id="locality-sensitive-hash"><a href="#locality-sensitive-hash" class="headerlink" title="locality-sensitive hash"></a>locality-sensitive hash</h3><p>在minHash基础上，首先对向量分段，然后在每个段内对向量进行hash分桶，在任意段内被分到同一个桶的用户作为候选用户，</p><p>之后只需要在候选用户中计算相似性即可。</p><p>优化：</p><ul><li>向量分为b个段，每个段行数为r。假设两个用户向量之间的Jaccard相似度为s，即两个向量任意一行相等的概率<ul><li>两个signature向量的任意一个band内所有行的值都相同的概率为 <img src="https://www.zhihu.com/equation?tex=s%5Er" srcset="/img/loading.gif" alt="[公式]"></li><li>两个signature向量的任意一个band内至少有一行值不同的概率为 <img src="https://www.zhihu.com/equation?tex=1-s%5Er" srcset="/img/loading.gif" alt="[公式]"></li><li>两个signature向量的所有band都不同的概率为 <img src="https://www.zhihu.com/equation?tex=%281-s%5Er%29%5Eb" srcset="/img/loading.gif" alt="[公式]"></li><li>两个signature向量至少有一个band相同的概率为 <img src="https://www.zhihu.com/equation?tex=1-%281-s%5Er%29%5Eb" srcset="/img/loading.gif" alt="[公式]"> ，即为两个用户成为candidate用户的概率</li></ul></li><li>对这个函数的S型曲线进行调参，找b和r的值。</li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>算法</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>GOODS谷歌数据湖管理系统</title>
     <link href="/2020/07/17/GOODS%E8%B0%B7%E6%AD%8C%E6%95%B0%E6%8D%AE%E6%B9%96%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/"/>
     <url>/2020/07/17/GOODS%E8%B0%B7%E6%AD%8C%E6%95%B0%E6%8D%AE%E6%B9%96%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/</url>
