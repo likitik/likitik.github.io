@@ -168,6 +168,44 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/08/04/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%AE%9E%E7%8E%B0/">线段树实现</a>
+
+      <a href="/2020/08/04/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%AE%9E%E7%8E%B0/" class="index-excerpt">
+        
+        
+          
+        
+        <div>线段树（近似完全二叉树）场景：对区间操作（求最值，求和，查找，更新）
+时间复杂度：构造：O(n)、查询O(logn)
+
+结构节点表示区间，叶子节点区间为1，即具体元素n，因此树总节点数2n-1node：start，end，value（区间最小值）,mark(延迟更新)
+用数组表示，大小为2*x+1，其中x是大于n的最小2的幂（要补齐成近似完全二叉树）
+节点i，左节点2i+1，右节点2i+2，val</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-08-04
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%8C%E4%BA%8C%E5%8F%89%E6%A0%91/">算法，二叉树</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a class="index-header" href="/2020/08/03/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%9A%8F%E6%9C%BA%E6%8A%BD%E6%A0%B7/">蓄水池随机抽样</a>
 
       <a href="/2020/08/03/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%9A%8F%E6%9C%BA%E6%8A%BD%E6%A0%B7/" class="index-excerpt">
@@ -506,50 +544,6 @@ h</div>
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/07/05/java%E8%AE%BE%E8%AE%A1%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/">java设计规则引擎</a>
-
-      <a href="/2020/07/05/java%E8%AE%BE%E8%AE%A1%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/" class="index-excerpt">
-        
-        
-          
-        
-        <div>
-用java设计一个规则引擎，要求首先抽象独立的规则，实现可插拔自定义的有序规则集
-例如：结果有效的条件为满足顺序满足规则1，2，3
-设计思路：将枚举与匿名内部类一起使用
-
-规则接口
-public interface Rule &#123;
-    public Object apply(Object object);
-&#125;
-
-具体规则
-public enum  ConcreteRule </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-05
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">java设计模式</a>
             
           </div>
         
