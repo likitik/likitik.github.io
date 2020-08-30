@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Yan">
   <meta name="keywords" content="">
-  <title>TCP基础 - Likitik</title>
+  <title>mock测试 - Likitik</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -152,8 +152,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-07-08 14:32">
-      2020年7月8日 下午
+    <time datetime="2020-08-13 10:35">
+      2020年8月13日 上午
     </time>
   </div>
 
@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      308 字
     </span>
   
 
@@ -173,7 +173,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      16
+      5
        分钟
     </span>
   
@@ -204,89 +204,92 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h4 id="TCP基础"><a href="#TCP基础" class="headerlink" title="TCP基础"></a>TCP基础</h4><p>面向连接的，一对一，需要建立连接</p>
-<p>可靠传输，全双工服务</p>
-<p>面向字节流的，消息无边界</p>
-<p>首部20字节，其中包括标志位（SYN，FIN，RST，ACK，URG，PSH），窗口大小</p>
-<p>源端口，目的端口，序列号seq，应答号ack，校验和等</p>
-<p>序列号处理包乱序，应答号确认不丢包</p>
-<h4 id="最大连接数："><a href="#最大连接数：" class="headerlink" title="最大连接数："></a>最大连接数：</h4><p>对于客户端，每次需要绑定本地空闲端口，最大65535，实际3万多可用，由于TIME_WAIT所以其实每秒不超过500</p>
-<p>对于服务端，受内存和socket文件描述符限制</p>
-<h4 id="常见场景："><a href="#常见场景：" class="headerlink" title="常见场景："></a>常见场景：</h4><p>FTP，HTTP/HTTPS</p>
-<h4 id="三次握手："><a href="#三次握手：" class="headerlink" title="三次握手："></a>三次握手：</h4><img src="https://cdn.jsdelivr.net/gh/likitik/helloworld@master/img/B703D972-AD7E-429D-BC27-5A03362584A0.png" srcset="/img/loading.gif" alt="B703D972-AD7E-429D-BC27-5A03362584A0" style="zoom:67%;" />
+              <p>常用mock测试</p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MockClass</span> </span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">mockTestFunc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>&#123;
+        publicFunc(<span class="hljs-string">"test"</span>);
+        <span class="hljs-keyword">return</span> privateFunc(i);
+    &#125;
 
-<p>第三次可以携带数据，如http-GET</p>
-<p>为了避免影响，初始序列号是随机的</p>
-<p> ISN = M（时钟）+F（四元组hash）</p>
-<p>netstat -napt</p>
-<p>为什么需要三次握手</p>
-<p>三次握手主要是解决这样一个常见的问题，<strong>客户端发送了第一个请求连接并且没有丢失</strong>，只是因为在网络结点中滞留的时间太长了，由于TCP的客户端迟迟没有收到确认报文，以为服务器没有收到，此时重新向服务器发送这条报文，此后客户端和服务器经过两次握手完成连接，传输数据，然后关闭连接。此时此前滞留的那一次请求连接，网络通畅了到达了服务器，这个报文本该是失效的，但是，两次握手的机制将会让客户端和服务器再次建立连接，这将导致不必要的错误和资源的浪费。</p>
-<ul>
-<li>避免历史连接，如果没有三次握手，一个旧的syn包被确认了，就代表一个历史的错误连接建立了。而有三次握手，客户端会根据历史上下文判断该ack错误，而发rst中止连接。</li>
-<li>同步双方序列号，四次合三次的过程</li>
-<li>避免冗余连接，syn包阻塞，会重新发，服务器端全部建立，造成冗余无效链接，浪费。</li>
-</ul>
-<h4 id="四次挥手："><a href="#四次挥手：" class="headerlink" title="四次挥手："></a>四次挥手：</h4><img src="https://cdn.jsdelivr.net/gh/likitik/helloworld@master/img/A046A75D-2F4D-4238-B691-ECEDC6E7B070.png" srcset="/img/loading.gif" alt="A046A75D-2F4D-4238-B691-ECEDC6E7B070" style="zoom:67%;" />
+    <span class="hljs-function"><span class="hljs-keyword">private</span> String <span class="hljs-title">privateFunc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"private func "</span> + i;
+    &#125;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">publicFunc</span><span class="hljs-params">(String s)</span></span>&#123;
+        System.out.println(<span class="hljs-string">"public func"</span> + s);
+    &#125;
 
-<p>如果客户端最后的ACK丢失了，会触发服务端超时从而重发FIN包</p>
-<p>收到FIN包后重发ACK给服务端，一来一回正好两个MSL（报文最大生存时间）</p>
-<p>什么情况下会导致服务器有大量处于 close_wait 状态的 tcp 连接？会造成什么问题？如何解决？ </p>
-<p>正常来说，close_wait 状态的出现是在接收到了客户端的 FIN 包，但是服务器端还未 close 的状态，一般情况下出现大量处于该状态的 tcp 连接原因就是服务器端没有主动去关闭连接，可能有忘写 close()、I/O线程被意外阻塞等等，这样可能会导致socket资源被打满，因为端口是有限的啊，解决方案就是找到为何服务器没有 close 的原因。</p>
-<p>什么情况下客户端会存在大量 time_wait 状态的 tcp 连接？为何需要 time_wait？会造成什么问题？如何解决？</p>
-<p>首先需要明确一点，处于 time_wait 状态的 tcp 连接是不能够被复用的，必须等其变为 close 状态才能复用。</p>
-<p>那什么情况下客户端会有大量的 time_wait 状态的 tcp 连接呢？当然是突然有大量连接的时候啊，因为 time_wait 的时间是 2MSL，也就是 60 s，如果在这 60 s 内有非常多的连接，自然就会产生大量处于该状态的 tcp 连接。</p>
-<h4 id="TIME-WAIT"><a href="#TIME-WAIT" class="headerlink" title="TIME_WAIT:"></a>TIME_WAIT:</h4><ul>
-<li><p>确保两个方向上的数据包都被丢弃了，防止被延迟的旧连接的数据包被接收。换句话说，让老的报文在网络中消逝，防止影响新的连接。</p>
-</li>
-<li><p>保证连接正确关闭，确保最后的ACK被服务端收到，否则，服务端会对下次发起的请求直接回复RST</p>
-</li>
-</ul>
-<p>解决大量TIME_WAIT</p>
-<ul>
-<li><p>设置关闭tcp连接直接发送rst</p>
-</li>
-<li><p>允许复用time_wait中的tcp连接</p>
-</li>
-</ul>
-<h4 id="如果已经建立了连接，但是客户端突然出现故障了怎么办？"><a href="#如果已经建立了连接，但是客户端突然出现故障了怎么办？" class="headerlink" title="如果已经建立了连接，但是客户端突然出现故障了怎么办？"></a>如果已经建立了连接，但是客户端突然出现故障了怎么办？</h4><p>TCP保活机制：每隔一个时间间隔，发送探测报文</p>
-<h4 id="滑动窗口："><a href="#滑动窗口：" class="headerlink" title="滑动窗口："></a>滑动窗口：</h4><p>滑动窗口是为了解决接收方和发送方能力不匹配的问题，减少重传</p>
-<p>tcp报文中窗口大小，表明自己的接收能力</p>
-<h4 id="拥塞控制："><a href="#拥塞控制：" class="headerlink" title="拥塞控制："></a>拥塞控制：</h4><p>拥塞控制避免一开始大量流量进入网络，超过网络负载能力，造成延迟等待</p>
-<ul>
-<li><p>慢开始</p>
-</li>
-<li><ul>
-<li>在TCP刚建立连接或者当网络发生拥塞超时的时候，将拥塞窗口cwnd设置成一个报文段大小，并且当cwnd&lt;=ssthresh时，指数方式增大cwnd（即每经过一个传输轮次，cwnd加倍）。</li>
-</ul>
-</li>
-<li><p>拥塞避免</p>
-</li>
-<li><ul>
-<li>当cwnd&gt;=sshresh时，为避免网络发生拥塞，进入拥塞避免算法，这时候以线性方式增大cwnd（即每经过一个传输轮次，cwnd只增大一个报文段）</li>
-</ul>
-</li>
-<li><p>快重传</p>
-</li>
-<li><ul>
-<li>是指发送方如果连续收到三个重复确认的ACK，则立即重传该报文段，而不必等待重传定时器超时后再重传。</li>
-</ul>
-</li>
-<li><p>快恢复</p>
-</li>
-<li><ul>
-<li><p>指当采用快速重传算法的时候，直接执行拥塞避免算法。这样可以提高传输效率。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghvyy68s3sj30sw0d019w.jpg" srcset="/img/loading.gif" alt="img"></p>
-</li>
-</ul>
-</li>
-</ul>
-<p>Ssthresh通常设置成发生拥塞时拥塞窗口的一半。必须&gt;=2.</p>
-<h4 id="TCP粘包："><a href="#TCP粘包：" class="headerlink" title="TCP粘包："></a>TCP粘包：</h4><p>由于面向字节流，会对应用层数据组合或拆分，应用层没有定义消息边界导致接收方无法重组。</p>
-<p>常见http头增加负载长度字段</p>
-<h4 id="Nagle算法"><a href="#Nagle算法" class="headerlink" title="Nagle算法"></a>Nagle算法</h4><p>主要是避免发送小的数据包，要求TCP连接上最多只能有一个未被确认的小分组，在该分组的确认到达之前不能发送其他的小分组。</p>
-<h4 id="syn攻击"><a href="#syn攻击" class="headerlink" title="syn攻击"></a>syn攻击</h4><p>syn队列到accept队列到accept()函数到应用</p>
-<p>syn队列被占满</p>
-<p>可以用cookie，当syn满了之后，将cookie返回给客户端，之后如果合理的ack，直接进入accept队列</p>
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">protectedFunc</span><span class="hljs-params">()</span></span>&#123;
+        System.out.println(<span class="hljs-string">"visible protected func"</span>);
+    &#125;
+&#125;</code></pre>
+
+<p>测试mock共有方法、</p>
+<p>测试powermock私有方法</p>
+<p>通过反射，测试私有方法</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.powermock<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>powermock-module-junit4<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0.7<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.powermock<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>powermock-api-mockito2<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
+
+<pre><code class="hljs java"><span class="hljs-comment">// mock私有方法必须写</span>
+<span class="hljs-meta">@RunWith</span>(PowerMockRunner<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>
+<span class="hljs-class">@<span class="hljs-title">PrepareForTest</span>(</span>&#123;MockClass<span class="hljs-class">.<span class="hljs-keyword">class</span>&#125;)</span>
+<span class="hljs-class"><span class="hljs-title">public</span> <span class="hljs-title">class</span> <span class="hljs-title">MockPrivateClassTest</span></span>
+<span class="hljs-class"></span>&#123;
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * mock共有方法</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-meta">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testMockPublic</span><span class="hljs-params">()</span></span>&#123;
+        MockClass mockClass = Mockito.spy(<span class="hljs-keyword">new</span> MockClass());
+        Mockito.doNothing().when(mockClass).publicFunc(Mockito.anyString());
+        System.out.println(mockClass.mockTestFunc(<span class="hljs-number">1</span>));
+    &#125;
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * mock私有方法</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-meta">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testMockPrivate</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;
+        MockClass mockClass = PowerMockito.spy(<span class="hljs-keyword">new</span> MockClass());
+        PowerMockito.when(mockClass, <span class="hljs-string">"privateFunc"</span>,Mockito.anyInt()).thenReturn(<span class="hljs-string">"mock private test"</span>);
+        String realResult = mockClass.mockTestFunc(<span class="hljs-number">1</span>);
+
+        Assert.assertEquals(<span class="hljs-string">"mock private test"</span>, realResult);
+    &#125;
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * 反射私有方法</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> NoSuchMethodException</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> InvocationTargetException</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> IllegalAccessException</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-meta">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testMethod</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> NoSuchMethodException, InvocationTargetException, IllegalAccessException </span>&#123;
+        Method method = MockClass.class.getDeclaredMethod("privateFunc",int.class);
+        method.setAccessible(<span class="hljs-keyword">true</span>);
+        MockClass mockClass = <span class="hljs-keyword">new</span> MockClass();
+        System.out.println(method.invoke(mockClass, <span class="hljs-number">2</span>));
+
+    &#125;
+
+    <span class="hljs-meta">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testProtected</span><span class="hljs-params">()</span></span>&#123;
+        MockClass mockClass = <span class="hljs-keyword">new</span> MockClass();
+        mockClass.protectedFunc();
+    &#125;
+&#125;</code></pre>
+
 
             </article>
             <hr>
@@ -296,7 +299,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
+                      <a class="hover-with-bg" href="/categories/java%E7%9B%B8%E5%85%B3/">java相关</a>
                     
                   </div>
                 
@@ -304,7 +307,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
                     
                   </div>
                 
@@ -317,9 +320,9 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/07/09/%E6%95%B0%E6%8D%AE%E6%B9%96%E7%AE%80%E4%BB%8B/">
+                      <a href="/2020/08/13/mysql-1-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E5%92%8C%E4%BA%8B%E5%8A%A1/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">数据湖简介</span>
+                        <span class="hidden-mobile">mysql(1)并发控制和事务</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -327,8 +330,8 @@
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/07/06/%E5%B8%B8%E7%94%A8java%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/">
-                        <span class="hidden-mobile">常用java内存分析工具</span>
+                      <a href="/2020/08/04/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%AE%9E%E7%8E%B0/">
+                        <span class="hidden-mobile">线段树实现</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -467,7 +470,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "TCP基础&nbsp;",
+        "mock测试&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

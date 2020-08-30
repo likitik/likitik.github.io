@@ -168,6 +168,217 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/08/30/jdk1-8%E6%8E%92%E5%BA%8F/">jdk1.8排序</a>
+
+      <a href="/2020/08/30/jdk1-8%E6%8E%92%E5%BA%8F/" class="index-excerpt">
+        
+        
+          
+        
+        <div>jdk层面实现的sort总共是两类，一个是 Arrays.sort()， Collections.sort()：
+Arrays.sort()如果数组内元素是基本数据类型，最主要采用的是双轴快速排序总结一下：
+
+数组长度小于47的时候是用直接插入算法，
+大于47并且小于286是采用双轴快速排序，
+大于286如果连续性好「也就是元素大多有序，有一个flag专门用来记录数组元素的升降次数，代表这个数组的</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-08-30
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E7%9B%B8%E5%85%B3/">java相关</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+            
+              <a href="/tags/java/">java</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/08/28/http%E8%BF%9E%E6%8E%A5/">http连接</a>
+
+      <a href="/2020/08/28/http%E8%BF%9E%E6%8E%A5/" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+
+http报文结构
+
+
+请求报文 和 响应报文
+
+三部分
+
+
+开始行
+
+
+method，url，version，status code
+
+
+首部行
+
+
+通用首部字段
+
+
+Date: 日期标志
+Transfer-Encoding: 对报文的传输采用的编码方式
+Via: 报文经过的中间节点（代理、网关）
+Cache-Control: 缓存指示
+
+
+请求首部字段
+
+
+Host请求资源所在的服务器
+Us</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-08-28
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/08/13/mysql-1-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E5%92%8C%E4%BA%8B%E5%8A%A1/">mysql(1)并发控制和事务</a>
+
+      <a href="/2020/08/13/mysql-1-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E5%92%8C%E4%BA%8B%E5%8A%A1/" class="index-excerpt">
+        
+        
+          
+        
+        <div>并发控制读写锁锁粒度（在锁的开销和数据安全性之间找平衡），不是越细粒度越好
+表锁会锁定整张表，在对表进⾏写操作之前，需要先获得写锁，获得写锁后将会阻塞其 他⽤⼾对该表的读写操作。只有没有写锁时，其他⽤⼾才能获取读锁，读锁之间是不相互阻塞的。写锁⽐读锁有更⾼的优先级，因此⼀个写锁请求可能会被插⼊到读锁队列的前⾯。
+虽然不同的存储引擎都有⾃⼰的锁实现，MySQL⾃⾝仍然会在服务器层使⽤表锁并忽略存储系</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-08-13
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/">数据库基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/mysql/">mysql</a>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/08/13/mock%E6%B5%8B%E8%AF%95/">mock测试</a>
+
+      <a href="/2020/08/13/mock%E6%B5%8B%E8%AF%95/" class="index-excerpt">
+        
+        
+          
+        
+        <div>常用mock测试
+public class MockClass &#123;
+    public String mockTestFunc(int i) &#123;
+        publicFunc("test");
+        return privateFunc(i);
+    &#125;
+
+    private String privateFunc(int i) &#123;
+</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-08-13
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E7%9B%B8%E5%85%B3/">java相关</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java/">java</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a class="index-header" href="/2020/08/04/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%AE%9E%E7%8E%B0/">线段树实现</a>
 
       <a href="/2020/08/04/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%AE%9E%E7%8E%B0/" class="index-excerpt">
@@ -422,185 +633,6 @@ In many cases, engineers and data scientists do</div>
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>&nbsp;2020-07-13
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3/">大数据相关</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/07/09/%E6%95%B0%E6%8D%AE%E6%B9%96%E7%AE%80%E4%BB%8B/">数据湖简介</a>
-
-      <a href="/2020/07/09/%E6%95%B0%E6%8D%AE%E6%B9%96%E7%AE%80%E4%BB%8B/" class="index-excerpt">
-        
-        
-          
-        
-        <div>什么是数据湖？AWS：以任意规模将您的所有数据存储在一个集中式存储库中
-允许以任意规模存储所有结构化和非结构化的数据，可以按照原样存储而无需对数据进行结构化处理，并运行不同类型的分析。
-
-首先要能满足导入任何数量，任意来源的实时数据，可以以原始形式入湖，从而节省定义数据结构，schema，和转换的时间。
-
-能够存储关系和非关系数据，并通过对数据进行发现，编目，建立索引来了解数据湖中的数据。
-
-数据</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-09
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3/">大数据相关</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/07/08/TCP%E5%9F%BA%E7%A1%80/">TCP基础</a>
-
-      <a href="/2020/07/08/TCP%E5%9F%BA%E7%A1%80/" class="index-excerpt">
-        
-        
-          
-        
-        <div>TCP基础面向连接的，一对一，需要建立连接
-可靠传输，全双工服务
-面向字节流的，消息无边界
-首部20字节，其中包括标志位（SYN，FIN，RST，ACK，URG，PSH），窗口大小
-源端口，目的端口，序列号seq，应答号ack，校验和等
-序列号处理包乱序，应答号确认不丢包
-最大连接数：对于客户端，每次需要绑定本地空闲端口，最大65535，实际3万多可用，由于TIME_WAIT所以其实每秒不超过50</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-08
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/07/06/%E5%B8%B8%E7%94%A8java%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/">常用java内存分析工具</a>
-
-      <a href="/2020/07/06/%E5%B8%B8%E7%94%A8java%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/" class="index-excerpt">
-        
-        
-          
-        
-        <div>java.lang.Runtime获取运行时jvm内存消耗情况
-static Runtime runtime = Runtime.getRuntime();
-public static void printUsedMemory()&#123;
-    System.out.println("Used Memory:" + (runtime.totalMemory() - runtime.freeM</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-06
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E7%9B%B8%E5%85%B3/">java相关</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/java/">java</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/07/05/%E5%88%9D%E8%AF%86Hbase/">初识Hbase</a>
-
-      <a href="/2020/07/05/%E5%88%9D%E8%AF%86Hbase/" class="index-excerpt">
-        
-        
-          
-        
-        <div>Hbasehttps://mp.weixin.qq.com/s/9Y4HXb4UG8Fxu2F0YXBuMQ
-Hbase：完全分布式，数据分片，故障自恢复底层HDFS（存储计算分离）扩展好，内置容错恢复和数据冗余
-Hbase vs Hivehbase：hadoop database，基于hadoop的分布式nosql数据库，主要适用于海量（PB级）明细数据的随机实时查询，如交易明细，轨迹行为。
-h</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-05
           </div>
         
         
