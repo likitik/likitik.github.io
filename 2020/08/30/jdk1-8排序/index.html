@@ -345,14 +345,12 @@
 <ul>
 <li><p>lo~i：&lt;pivot1</p>
 </li>
-<li><p>i~k：=pivot1</p>
-</li>
-<li><p>k~j：&gt;pivot1&amp;&amp;&lt;pivot2</p>
+<li><p>i~j：&gt;=pivot1&amp;&amp;&lt;=pivot2</p>
 </li>
 <li><p>j~hi：&gt;pivot2</p>
 </li>
 </ul>
-<p>初始化后，k向右移动，直到与j相遇</p>
+<p>初始化后，k在[(i,j)之间向右移动，直到与j相遇</p>
 <p>注意：当A[k]&gt;pivot2时，不能直接和A[j]交换，要先j自减找到合适的位置，然后根据情况直接与k交换，或者先与k交换，再与i交换</p>
 <p>最后i，j位置就是pivot的位置</p>
 <pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">QuickSortDualPivot</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] A, <span class="hljs-keyword">int</span> L, <span class="hljs-keyword">int</span> R)</span> </span>&#123;
