@@ -168,6 +168,121 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/10/23/java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%92%8CGC/">java内存管理和GC</a>
+
+      <a href="/2020/10/23/java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%92%8CGC/" class="index-excerpt">
+        
+        
+          
+        
+        <div>java运行时数据区域
+程序计数器
+线程私有，程序控制流的指示器，字节码，JAVA方法，执行本地方法时计数器为空。
+
+
+虚拟机栈
+线程私有，存储局部变量表、操作数栈、动态连接、方法出口等信息。
+
+
+本地方法栈
+虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈则是为虚拟机使用到的本地（Native）方法服务。
+
+
+java堆
+线程共享，存放对象实例，GC堆，可分代空间，可线程私有分</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-10-23
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E7%9B%B8%E5%85%B3/">java相关</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/jvm-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">jvm 垃圾回收</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/09/27/mysql%E7%B4%A2%E5%BC%95/">mysql索引</a>
+
+      <a href="/2020/09/27/mysql%E7%B4%A2%E5%BC%95/" class="index-excerpt">
+        
+        
+          
+        
+        <div>索引
+主键索引，唯一索引，普通索引，全文索引
+
+有B+，hash两种数据结构
+
+索引将无序的数据变成有序的查询，在创建索引的列上内容排序，再生成倒排表
+
+原则
+
+
+最左前缀匹配原则
+频繁作为查询条件的字段才建立索引
+更新频繁的字段不适合建立索引
+基数较少不适合索引
+尽量扩展索引，而不是新建索引
+不过度索引
+有外键的数据列要建立索引
+text，image，bit数据不要索引
+用0值代替NULL值
+短</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-09-27
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/">数据库基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/mysql/">mysql</a>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a class="index-header" href="/2020/08/30/jdk1-8%E6%8E%92%E5%BA%8F/">jdk1.8排序</a>
 
       <a href="/2020/08/30/jdk1-8%E6%8E%92%E5%BA%8F/" class="index-excerpt">
@@ -560,94 +675,6 @@ minHash对两个向量做相同的随机排列，找到各自第一个非0值，
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/07/17/GOODS%E8%B0%B7%E6%AD%8C%E6%95%B0%E6%8D%AE%E6%B9%96%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">GOODS谷歌数据湖管理系统</a>
-
-      <a href="/2020/07/17/GOODS%E8%B0%B7%E6%AD%8C%E6%95%B0%E6%8D%AE%E6%B9%96%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" class="index-excerpt">
-        
-        
-          
-        
-        <div>Managing Google’s data lake: an overview of the GOODS system
-会议：Bulletin of the IEEE Computer Society Technical Committee on Data Engineering
-year：2016
-
-In many cases, engineers and data scientists do</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-17
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3/">大数据相关</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E6%B9%96/">数据湖</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/07/13/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E6%B9%96%E5%8F%98%E6%88%90%E6%95%B0%E6%8D%AE%E6%B2%BC%E6%B3%BD/">如何防止数据湖变成数据沼泽</a>
-
-      <a href="/2020/07/13/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2%E6%95%B0%E6%8D%AE%E6%B9%96%E5%8F%98%E6%88%90%E6%95%B0%E6%8D%AE%E6%B2%BC%E6%B3%BD/" class="index-excerpt">
-        
-        
-          
-        
-        <div>
-数据湖可以存储所有结构化与非结构化数据，但是庞大的存储库会瘫痪，如何防止数据湖变成数据沼泽。
-
-数据沼泽​        企业希望建立一个数据湖，能够将所有数据以原生格式存储，从而打破数据孤岛，成为一个单一的数据存储库，使从业务分析到数据挖掘的所有事都可以在数据湖中解决。
-​        但是很多数据湖最后都恶化为了终端用户完全无法访问的海量数据仓库-数据沼泽。一些公司成功的围绕数据湖建立了业</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-13
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3/">大数据相关</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
             
           </div>
         
